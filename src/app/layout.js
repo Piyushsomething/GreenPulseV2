@@ -1,7 +1,7 @@
-import { Inter } from "next/font/google";
+import { PrimeReactProvider } from "primereact/api";
 import "./globals.css";
-
-const inter = Inter({ subsets: ["latin"] });
+import "primereact/resources/themes/lara-dark-green/theme.css";
+import Navbar from "@/components/Navbar";
 
 export const metadata = {
   title: "Create Next App",
@@ -11,7 +11,12 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className="min-h-screen">
+        <PrimeReactProvider>
+          <Navbar />
+          <main className="min-h-[calc(100vh-80px)]">{children}</main>
+        </PrimeReactProvider>
+      </body>
     </html>
   );
 }
