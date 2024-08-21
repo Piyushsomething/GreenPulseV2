@@ -1,28 +1,51 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Toolbar } from "primereact/toolbar";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "primereact/button";
-import Cookies from 'js-cookie'; // Import js-cookie
 import useAuthStore from "@/store/authStore";
+import { useRouter } from "next/navigation";
 
 export default function Navbar() {
-  const { validUser, resetStore } = useAuthStore();
+  const { validUser, isAdmin, resetAuth } = useAuthStore();
+  const router = useRouter();
+  const [hasMounted, setHasMounted] = useState(false);
+
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
 
   const handleSignOut = () => {
-    Cookies.remove('access_token_login', { path: '/' });
-    Cookies.remove('IsAdmin', { path: '/' });
-    resetStore();
+    resetAuth();
+    router.push('/');
   };
+  if (!hasMounted) {
+    return null; // or return a loading spinner, or only return part of the component
+  }
 
   const endContent = validUser ? (
     <div className="flex gap-4">
-      <Link href="/Dashboard">
-        <Button link className="p-button-text transition-colors">
-          Dashboard
-        </Button>
-      </Link>
+      {isAdmin ? (
+        <Link href="/admin">
+          <Button link className="p-button-text transition-colors">
+            Admin Panel
+          </Button>
+        </Link>
+      ) : (
+        <>
+        <Link href="/Dashboard">
+          <Button link className="p-button-text transition-colors">
+            Dashboard
+          </Button>
+        </Link>
+        <Link href="/status">
+          <Button link className="p-button-text transition-colors">
+            Status
+          </Button>
+        </Link>
+        </>
+      )}
       <Button label="Sign Out" className="p-button-text transition-colors" onClick={handleSignOut} />
     </div>
   ) : (
@@ -60,9 +83,9 @@ export default function Navbar() {
           </Link>
         }
         center={
-          <div className="">
-            <div className="text-5xl font-bold text-white">GREENPULSE</div>
-          </div>
+          <Link href="/">
+            <Button className="text-5xl">GREENPULSE</Button>
+          </Link>
         }
         end={endContent}
         className="bg-transparent surface-0 shadow-2 border rounded-full"

@@ -1,7 +1,11 @@
 import { PrimeReactProvider } from "primereact/api";
+import { Bungee_Spice } from 'next/font/google'
 import "./globals.css";
 import "primereact/resources/themes/lara-dark-green/theme.css";
 import Navbar from "@/components/Navbar";
+
+const inter = Bungee_Spice({ subsets: ['latin'] ,weight: '400'})
+
 
 export const metadata = {
   title: "Create Next App",
@@ -11,7 +15,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className="min-h-screen">
+      <body className={inter.className} suppressHydrationWarning>
         <PrimeReactProvider>
           <Navbar />
           <main className="min-h-[calc(100vh-80px)]">{children}</main>

@@ -5,7 +5,6 @@ import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import { Image } from "primereact/image";
 import { useRouter } from "next/navigation";
-import Cookies from 'js-cookie'; // Import js-cookie
 import useAuthStore from "@/store/authStore";
 
 const LoginPage = () => {
@@ -13,11 +12,11 @@ const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
-  const { setAuthToken, setUserRole, setUserData } = useAuthStore();
+  const { setAuth } = useAuthStore();
 
   const handleLogin = async () => {
     try {
-      const response = await fetch("http://localhost:8000/token", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL_GREENPULSE}/token`, {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
@@ -29,40 +28,21 @@ const LoginPage = () => {
       if (response.ok) {
         const { access_token, IsAdmin } = data;
 
-        // Store tokens in cookies using js-cookie
-        Cookies.set('access_token_login', access_token, { path: '/', sameSite: 'None', secure: true });
-      Cookies.set('IsAdmin', IsAdmin, { path: '/', sameSite: 'None', secure: true });
+        setAuth(access_token, IsAdmin);
 
-        // Fetch user data
-        const userResponse = await fetch("http://localhost:8000/users/me", {
-          method: "GET",
-          headers: {
-            "Accept": "application/json",
-            "Authorization": `Bearer ${access_token}`,
-          },
-        });
-        const userData = await userResponse.json();
-
-        if (userResponse.ok) {
-          // Update Zustand store with user data and token
-          setAuthToken(access_token);
-          setUserRole(IsAdmin);
-          setUserData(userData);
-
-          // Redirect based on role
-          if (IsAdmin) {
-            router.push('/Dashboard');
-          } else {
-            router.push('/admin');
-          }
+        // Redirect based on role
+        if (IsAdmin) {
+          router.push('/admin');
         } else {
-          console.error('User data fetch failed');
+          router.push('/Dashboard');
         }
       } else {
         console.error('Login failed');
+        // Handle login failure (e.g., show error message)
       }
     } catch (error) {
       console.error('An error occurred:', error);
+      // Handle error (e.g., show error message)
     }
   };
 
