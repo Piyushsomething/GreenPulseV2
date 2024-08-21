@@ -1,6 +1,7 @@
 //for user registration approval
 import React, { useState, useEffect } from 'react';
 import Cookies from 'js-cookie';
+import { Button } from 'primereact/button';
 
 const AdminComponent4 = () => {
   const [users, setUsers] = useState([]);
@@ -76,20 +77,20 @@ const AdminComponent4 = () => {
                 <td>{user.is_admin ? 'Yes' : 'No'}</td>
                 <td>{user.verified_user ? 'Yes' : 'No'}</td>
                 <td>
-                  <button
+                  <Button
                     onClick={() => handleVerification(user.id, true)}
                     disabled={user.verified_user}
                     className="btn btn-sm btn-primary mr-2"
                   >
                     Approve
-                  </button>
-                  <button
+                  </Button>
+                  <Button
                     onClick={() => handleVerification(user.id, false)}
                     disabled={!user.verified_user}
                     className="btn btn-sm btn-error"
                   >
                     Deny
-                  </button>
+                  </Button>
                 </td>
               </tr>
             ))}

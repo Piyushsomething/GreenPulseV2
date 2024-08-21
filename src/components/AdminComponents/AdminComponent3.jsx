@@ -67,7 +67,7 @@ const AdminComponent3 = () => {
 
   return (
     <div className="p-4 h-full overflow-auto">
-      <h2 className="text-2xl font-semibold mb-4">ADMIN PANEL</h2>
+      {/* <h2 className="text-2xl font-semibold mb-4">ADMIN PANEL</h2> */}
       <hr/>
       <h2 className="text-2xl font-semibold mb-4">User Preferences</h2>
       <table className="table w-full mb-4">

@@ -39,41 +39,43 @@ const AdminPageComponent = () => {
   };
 
   return (
-    <div className="flex h-screen flex-col">
-      <div className="relative flex flex-1 flex-col overflow-hidden md:flex-row">
-        <div className="h-full w-full overflow-auto md:w-1/6">
-          <AdminComponent1 onareaSelect={handleAreaSelect} />
-        </div>
-        <div className="h-full w-full overflow-auto md:w-3/6">
-          <div className="h-full bg-green-200 object-contain">
-            <div className="h-full" style={{ height: "calc(100vh - 5.8rem)" }}>
-              {loading ? (
-                <div className="flex h-full items-center justify-center">
-                  <span className="loading loading-spinner loading-xs"></span>
-                </div>
-              ) : (
-                selectedArea && (
-                  <CesiumWrapper
+    <div className="grid grid-cols-1  md:grid-cols-4 md:grid-rows-7 gap-4 p-4 h-screen w-full">
+      {/* Top-left div that spans two columns */}
+      <div className="bg-gray-800 text-white p-6 rounded-lg flex flex-col justify-center items-center md:col-span-2 md:row-span-5">
+      <CesiumWrapper
                     positions={selectedArea}
                     onCesiumLoad={handleCesiumLoad}
                     style={{ height: "100%", width: "100%" }}
                   />
-                )
-              )}
-            </div>
-          </div>
-        </div>
-        <div className="flex h-full w-full flex-col overflow-auto md:w-2/6">
-          <div className="flex-1 overflow-auto">
-            <AdminComponent3
-              userRequests={userRequests}
-              handleUserRequest={handleUserRequest}
-            />
-          </div>
-          <div className="flex-1 overflow-auto">
-            <AdminComponent4 />
-          </div>
-        </div>
+        {/* Add icons or content here */}
+      </div>
+
+      {/* Top-right div */}
+      <div className="bg-gray-800 text-white p-6 rounded-lg flex flex-col justify-center items-center md:col-span-2 md:row-span-2 overflow-auto">
+
+      </div>
+
+      {/* Bottom-left div */}
+      <div className="bg-gray-800 text-white p-6 rounded-lg flex flex-col justify-center items-center md:col-span-2 md:row-span-2">
+        <h2 className="text-xl font-bold mb-4">Integrated AI</h2>
+        <p className="text-sm text-center">
+          Proactive uses AI to help you create engaging content.
+        </p>
+        {/* Add AI content here */}
+      </div>
+
+      {/* Bottom-middle div that spans two rows */}
+      <div className="bg-gray-800 text-white p-6 rounded-lg flex flex-col justify-center items-center md:col-span-2 md:row-span-3">
+      <AdminComponent3/>
+
+        {/* Add collaboration tools content here */}
+      </div>
+
+      {/* Bottom-right div */}
+      <div className="bg-gray-800 text-white p-6 rounded-lg flex flex-col justify-center items-center md:col-span-2 md:row-span-2 overflow-auto">
+      <AdminComponent4 />
+
+        {/* Add audience insights content here */}
       </div>
     </div>
   );
