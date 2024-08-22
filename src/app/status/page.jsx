@@ -28,7 +28,7 @@ const StatusPage = () => {
           return;
         }
 
-        const response = await fetch(`http://127.0.0.1:8000/tickets/`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL_GREENPULSE}/tickets/`, {
           method: "GET",
           headers: {
             accept: "application/json",

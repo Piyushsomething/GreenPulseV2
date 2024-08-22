@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import Cookies from 'js-cookie';
 import { Button } from 'primereact/button';
+import { DataTable } from 'primereact/datatable';
+import { Column } from 'primereact/column';
 
 const AdminComponent4 = () => {
   const [users, setUsers] = useState([]);
@@ -13,7 +15,7 @@ const AdminComponent4 = () => {
   const fetchUsers = async () => {
     const token = Cookies.get('access_token_login');
     try {
-      const response = await fetch('http://127.0.0.1:8000/signup/all', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL_GREENPULSE}/signup/all`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'accept': 'application/json'
@@ -26,14 +28,14 @@ const AdminComponent4 = () => {
         throw new Error('Failed to fetch users');
       }
     } catch (error) {
-      alert('Your session expired.Plz logout and login again.');
+      // alert('Your session expired.Plz logout and login again.');
     }
   };
 
   const handleVerification = async (userId, verificationStatus) => {
     const token = Cookies.get('access_token_login');
     try {
-      const response = await fetch(`http://127.0.0.1:8000/signup/${userId}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL_GREENPULSE}/signup/${userId}`, {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -53,50 +55,43 @@ const AdminComponent4 = () => {
     }
   };
 
+  const actionBodyTemplate = (rowData) => {
+    return (
+      <div>
+        <Button
+          onClick={() => handleVerification(rowData.id, true)}
+          disabled={rowData.verified_user}
+          className="p-button p-button-sm p-button-primary mr-2"
+        >
+          Approve
+        </Button>
+        <Button
+          onClick={() => handleVerification(rowData.id, false)}
+          disabled={!rowData.verified_user}
+          className="p-button p-button-sm p-button-danger"
+        >
+          Deny
+        </Button>
+      </div>
+    );
+  };
+
   return (
     <div className="p-4">
       <h2 className="text-2xl font-bold mb-4">User Management</h2>
-      <div className="overflow-x-auto">
-        <table className="table table-zebra w-full">
-          <thead>
-            <tr>
-              <th>Username</th>
-              <th>Email</th>
-              <th>Full Name</th>
-              <th>Admin</th>
-              <th>Verified</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users.map((user) => (
-              <tr key={user.id}>
-                <td>{user.username}</td>
-                <td>{user.email}</td>
-                <td>{user.full_name}</td>
-                <td>{user.is_admin ? 'Yes' : 'No'}</td>
-                <td>{user.verified_user ? 'Yes' : 'No'}</td>
-                <td>
-                  <Button
-                    onClick={() => handleVerification(user.id, true)}
-                    disabled={user.verified_user}
-                    className="btn btn-sm btn-primary mr-2"
-                  >
-                    Approve
-                  </Button>
-                  <Button
-                    onClick={() => handleVerification(user.id, false)}
-                    disabled={!user.verified_user}
-                    className="btn btn-sm btn-error"
-                  >
-                    Deny
-                  </Button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <DataTable
+        value={users}
+        scrollable
+        scrollHeight="400px"
+        className="p-datatable-gridlines"
+      >
+        <Column field="username" header="Username" />
+        <Column field="email" header="Email" />
+        <Column field="full_name" header="Full Name" />
+        <Column field="is_admin" header="Admin" body={(data) => (data.is_admin ? 'Yes' : 'No')} />
+        <Column field="verified_user" header="Verified" body={(data) => (data.verified_user ? 'Yes' : 'No')} />
+        <Column header="Actions" body={actionBodyTemplate} />
+      </DataTable>
     </div>
   );
 };

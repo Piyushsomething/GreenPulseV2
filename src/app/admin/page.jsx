@@ -42,38 +42,38 @@ const AdminPageComponent = () => {
     <div className="grid grid-cols-1  md:grid-cols-4 md:grid-rows-7 gap-4 p-4 h-screen w-full">
       {/* Top-left div that spans two columns */}
       <div className="bg-gray-800 text-white p-6 rounded-lg flex flex-col justify-center items-center md:col-span-2 md:row-span-5">
-      <CesiumWrapper
-                    positions={selectedArea}
-                    onCesiumLoad={handleCesiumLoad}
-                    style={{ height: "100%", width: "100%" }}
-                  />
+        <CesiumWrapper
+          positions={selectedArea}
+          onCesiumLoad={handleCesiumLoad}
+          style={{ height: "100%", width: "100%" }}
+        />
         {/* Add icons or content here */}
       </div>
 
       {/* Top-right div */}
-      <div className="bg-gray-800 text-white p-6 rounded-lg flex flex-col justify-center items-center md:col-span-2 md:row-span-2 overflow-auto">
-
+      <div className="bg-gray-800 text-white p-6 rounded-lg flex flex-col justify-center items-center md:col-span-2 md:row-span-4 overflow-auto">
+        <AdminComponent1/>
       </div>
 
       {/* Bottom-left div */}
-      <div className="bg-gray-800 text-white p-6 rounded-lg flex flex-col justify-center items-center md:col-span-2 md:row-span-2">
+      {/* <div className="bg-gray-800 text-white p-6 rounded-lg flex flex-col justify-center items-center md:col-span-2 md:row-span-2">
         <h2 className="text-xl font-bold mb-4">Integrated AI</h2>
         <p className="text-sm text-center">
           Proactive uses AI to help you create engaging content.
         </p>
+      </div> */}
         {/* Add AI content here */}
-      </div>
 
       {/* Bottom-middle div that spans two rows */}
       <div className="bg-gray-800 text-white p-6 rounded-lg flex flex-col justify-center items-center md:col-span-2 md:row-span-3">
-      <AdminComponent3/>
+        <AdminComponent3 />
 
         {/* Add collaboration tools content here */}
       </div>
 
       {/* Bottom-right div */}
       <div className="bg-gray-800 text-white p-6 rounded-lg flex flex-col justify-center items-center md:col-span-2 md:row-span-2 overflow-auto">
-      <AdminComponent4 />
+        <AdminComponent4 />
 
         {/* Add audience insights content here */}
       </div>

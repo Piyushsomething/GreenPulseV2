@@ -18,7 +18,7 @@ const AdminComponent3 = () => {
             return;
           }
 
-          const response = await fetch("http://127.0.0.1:8000/tickets/all", {
+          const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL_GREENPULSE}/tickets/all`, {
             headers: {
               Authorization: `Bearer ${token}`,
             },
@@ -39,7 +39,7 @@ const AdminComponent3 = () => {
   const handleUserRequest = async (id, adminApproval) => {
     try {
       const token = Cookies.get("access_token_login");
-      const response = await fetch(`http://127.0.0.1:8000/tickets/${id}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL_GREENPULSE}/tickets/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -69,7 +69,7 @@ const AdminComponent3 = () => {
     <div className="p-4 h-full overflow-auto">
       {/* <h2 className="text-2xl font-semibold mb-4">ADMIN PANEL</h2> */}
       <hr/>
-      <h2 className="text-2xl font-semibold mb-4">User Preferences</h2>
+      <h2 className="text-2xl font-semibold mb-4">Plant Growing Requests</h2>
       <table className="table w-full mb-4">
         <thead>
           <tr>

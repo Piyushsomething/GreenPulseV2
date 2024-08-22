@@ -17,7 +17,7 @@ const AdminComponent1 = ({ onareaSelect }) => {
   useEffect(() => {
     const fetchAreas = async () => {
       try {
-        const response = await fetch("http://127.0.0.1:8000/area/");
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL_GREENPULSE}/area/`);
         const data = await response.json();
         setAreas(data);
       } catch (error) {

@@ -33,7 +33,7 @@ const Component1 = () => {
   useEffect(() => {
     const fetchAreasData = async () => {
       try {
-        const response = await fetch(`http://127.0.0.1:8000/area/`);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL_GREENPULSE}/area/`);
         const data = await response.json();
         setAreasData(data);
       } catch (error) {
@@ -45,7 +45,7 @@ const Component1 = () => {
 
     const fetchPlantsData = async () => {
       try {
-        const response = await fetch(`http://127.0.0.1:8000/plants/`);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL_GREENPULSE}/plants/`);
         const data = await response.json();
         setPlantsData(data);
       } catch (error) {
@@ -99,7 +99,7 @@ const Component1 = () => {
           throw new Error("Selected area or plant is invalid.");
         }
 
-        const response = await fetch(`http://127.0.0.1:8000/tickets/`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL_GREENPULSE}/tickets/`, {
           method: "POST",
           headers: {
             accept: "application/json",
